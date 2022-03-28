@@ -2,7 +2,6 @@ public class Location {
 
     private String name = "Null"; //name shown to a player when entering a new loction
     private String desc = "Null"; //description shown to a player when they 'look'
-    private int[] nav = new int[4]; //array to store the locations to more the player to when moving 
 
     public Location(String lName, String lDesc) {
 
@@ -23,9 +22,4 @@ public class Location {
 
     }
 
-    public int move(int dir) {
-
-        return this.nav[dir];
-
-    }
 }
