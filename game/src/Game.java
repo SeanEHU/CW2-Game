@@ -2,27 +2,23 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class Game {
     
     public Location[][] locationArray = new Location[4][4];
-    //public Player player = null;
+    public Player player = null;
     private boolean gameWon = false;
 
     public Game() {
 
         this.loadLocations();
-        //this.player = new Player;
-
-        for(int y = 0; y <= 3; y++){
-            for(int x = 0 ; x <= 3; x++){
-                
-                System.out.println(this.locationArray[x][y].getName());
-                System.out.println(this.locationArray[x][y].getDesc());
-                
-            }
-        }
-
+        
+        Scanner in = new Scanner(System.in);
+        System.out.println("Welcome to the game, what is your name?");
+        String playerName = in.nextLine();
+        this.player = new Player(playerName);
+        in.close();
     }
 
     private void loadLocations() {
