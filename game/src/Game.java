@@ -1,6 +1,7 @@
-import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Game {
     
@@ -27,24 +28,27 @@ public class Game {
     private void loadLocations() {
         
         try{
-            FileReader mapReader = new FileReader("./src/map.csv");
-            BufferedReader bufferedReader = new BufferedReader(mapReader);
+            BufferedReader mapReader = new BufferedReader(new InputStreamReader(new FileInputStream("game/map/map.csv"), "UTF8")); //Specify charset to prevent encoding errors
             String line = "";
 
             for(int y = 0; y <= 3; y++){
                 for(int x = 0 ; x <= 3; x++){
-                    line = bufferedReader.readLine();
+                    line = mapReader.readLine();
                     System.out.println(line);
                     String[] values = line.split(",");
                     this.locationArray[x][y] = new Location(values[0], values[1]);
-
-                    bufferedReader.close();
+                    
                 }
             }
+            mapReader.close();
         }
         catch(IOException e){
+            System.out.println("oops, an error occured.");
+            System.out.println(e);
         }
-        finally{}
+        finally{
+            
+        }
 
 
     }
