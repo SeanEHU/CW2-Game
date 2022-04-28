@@ -13,8 +13,11 @@ public class Player extends Mob {
 		health += healVal;
 	}
 	
-	public void move() {
-		
+	public void moveX(int moveNum) {
+		this.location[0] += moveNum;
+	}
+	public void moveY(int moveNum) {
+		this.location[0] += moveNum;
 	}
 	
 	public int getLocX() {
