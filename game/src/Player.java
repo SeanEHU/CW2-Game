@@ -37,7 +37,6 @@ public class Player extends Mob {
 	public int getLocX() {
 		return this.location[0];
 	}
-
     public int getLocY() {
 		return this.location[1];
 	}
