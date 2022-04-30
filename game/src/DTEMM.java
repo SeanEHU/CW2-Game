@@ -4,7 +4,7 @@ public class DTEMM {
         
         Game newGame = new Game();
         
-        while(!newGame.hasGameWon()) {
+        while(!newGame.isGameOver()) {
 
             newGame.nextTurn();
 

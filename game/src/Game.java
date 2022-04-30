@@ -1,24 +1,31 @@
-import java.io.BufferedReader;
+import java.io.BufferedReader; 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Game {
     
     private Location[][] locationArray = new Location[4][4];
     private Player player = null;
-    private boolean gameWon = false;
+    private boolean gameOver = false;
 
     public Game() {
 
         this.loadLocations();
         
-        Scanner nameIn = new Scanner(System.in);
-        System.out.println("Welcome to the game, what is your name?");
-        String playerName = nameIn.nextLine();
-        this.player = new Player(playerName);
-        nameIn.close();
+        Boolean waitName = true;
+        while(waitName){
+            String playerName = "";
+
+            playerName = JOptionPane.showInputDialog(
+                "What is your name:\n");
+                
+            if (playerName != ""){
+                this.player = new Player(playerName);
+                waitName = false;
+            }
+        }
     }
 
     private void loadLocations() {
@@ -38,8 +45,7 @@ public class Game {
             mapReader.close();
         }
         catch(IOException e){
-            System.out.println("oops, an error occured.");
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null,"oops, an error occured.");
         }
         finally{
             
@@ -50,75 +56,75 @@ public class Game {
     public void nextTurn() {
 
         String input = "";
-        Scanner in = new Scanner(System.in);
 
-        System.out.print("You are at the ");
-        System.out.println(this.getPlayerLocName());
+        input = JOptionPane.showInputDialog(
+            "You are at the "
+            + this.getPlayerLocName()
+            + "\n What would you like to do?\n"
+            +"(Type Help for a list of commands)");
 
-        System.out.println("What would you like to do? (Type Help for a list of commands)");
-        input = in.nextLine();
-
+            
         if(input.toLowerCase().contains("help")){
-            System.out.println("You can 'look' around. Or you can try to 'go North/South/East/West'.");
+            JOptionPane.showMessageDialog(null,"You can 'look' around. You can try to 'go North/South/East/West'. Or you can 'quit' the game.");
+            }
+        else if (input.toLowerCase().contains("look")){
+            JOptionPane.showMessageDialog(null,"You can look around. You see:\n" + getPlayerLocDesc());
         }
         else if(input.toLowerCase().contains("go")){
-            this.movePlayer(input);
+                this.movePlayer(input);
+            }
+        else if(input.toLowerCase().contains("quit")){
+            this.gameOver = true;
         }
         else {
-            System.out.println("Sorry, I couldn't understand that. Type 'help' if you need a reminder of the commands.");
-        }
-        
-        in.close();
+            JOptionPane.showMessageDialog(null,"Sorry, I couldn't understand that. Type 'help' if you need a reminder of the commands.");
+            }
+
+
     }
 
     private String getPlayerLocName() {
-        return this.locationArray[this.player.getLocX()][this.player.getLocX()].getName();
+        return this.locationArray[this.player.getLocX()][this.player.getLocY()].getName();
+    }
+
+    private String getPlayerLocDesc() {
+        return this.locationArray[this.player.getLocX()][this.player.getLocY()].getDesc();
     }
 
     private void movePlayer(String direction) {
 
-        try{
-            if(direction.toLowerCase().contains("north")){
+        if(direction.toLowerCase().contains("north")){
 
                 this.player.moveY(-1);
-                System.out.print("You move North to the ");
-                System.out.println(getPlayerLocName());
+                JOptionPane.showMessageDialog(null,"You move North to the " + getPlayerLocName());
 
             }
-            else if(direction.toLowerCase().contains("south")){
+        else if(direction.toLowerCase().contains("south")){
 
-                this.player.moveY(1);
-                System.out.print("You move South to the ");
-                System.out.println(getPlayerLocName());
+            this.player.moveY(1);
+            JOptionPane.showMessageDialog(null,"You move South to the " + getPlayerLocName());
 
-            }
-            else if(direction.toLowerCase().contains("east")){
-
-                this.player.moveX(1);
-                System.out.print("You move East to the ");
-                System.out.println(getPlayerLocName());
-
-
-            }
-            else if(direction.toLowerCase().contains("west")){
-
-                this.player.moveX(-1);
-                System.out.print("You move West to the ");
-                System.out.println(getPlayerLocName());
-
-            }
-            else{
-                System.out.println("Sorry, I can't understand what direction you are trying to go.");
-            }
         }
-        catch(IndexOutOfBoundsException e){
-            System.out.println("You cant seem to go that way, try another.");
-        }
+        else if(direction.toLowerCase().contains("east")){
 
+            this.player.moveX(1);
+            JOptionPane.showMessageDialog(null,"You move East to the " + getPlayerLocName());
+
+
+        }
+        else if(direction.toLowerCase().contains("west")){
+
+            this.player.moveX(-1);
+            JOptionPane.showMessageDialog(null,"You move West to the " + getPlayerLocName());
+
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Sorry, I can't understand what direction you are trying to go.");
+        }
     }
 
-    public boolean hasGameWon() {
-        return this.gameWon;
+    public boolean isGameOver() {
+        return this.gameOver;
     }
 
 }

@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 public class Player extends Mob {
 
 	private int[] location = null;
@@ -14,10 +16,22 @@ public class Player extends Mob {
 	}
 	
 	public void moveX(int moveNum) {
-		this.location[0] += moveNum;
+		if(this.location[0] + moveNum >= 0 && this.location[0] + moveNum < 4){
+			this.location[0] += moveNum;
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "You cant seem to go that way, try another.");
+		}
 	}
 	public void moveY(int moveNum) {
-		this.location[0] += moveNum;
+		if(this.location[1] + moveNum >= 0 && this.location[1] + moveNum < 4){
+			this.location[1] += moveNum;
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "You cant seem to go that way, try another.");
+		}
+
+		
 	}
 	
 	public int getLocX() {
