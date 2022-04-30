@@ -18,7 +18,7 @@ public class Location {
 
     public String getDesc() {
 
-        return String.format("You are in %s. You look around and see %s", this.name, this.desc);
+        return String.format(this.desc);
 
     }
 
